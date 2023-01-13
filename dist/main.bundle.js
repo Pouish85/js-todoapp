@@ -954,22 +954,29 @@ form.addEventListener('submit', event => {
 });
 
 //fonction fléchée qui va creer et remplir une balise <li>
-const createTodoElement = todo => {
+const createTodoElement = (todo, index) => {
   const li = document.createElement('li');
+  const deleteBtn = document.createElement('button');
   li.classList.add("d-flex", "align-items-start");
+  deleteBtn.classList.add("btn", "btn-danger", "mx-2");
+  deleteBtn.innerText = "Supprimer";
+  deleteBtn.addEventListener('click', Event => {
+    todos.splice(index, 1);
+    displayTodos();
+  });
   li.innerHTML = `
         <span class="todo ${todo.done ? 'done' : ''}"></span>
         <p class="w-100">${todo.text}</p>
         <button class="btn btn-primary mx-2">Editer</button>
-        <button class="btn btn-danger mx-2">Supprimer</button>
     `;
+  li.appendChild(deleteBtn);
   return li;
 };
 
 // fonction qui va afficher la liste des taches
 const displayTodos = () => {
   const todosNode = todos.map((todo, index) => {
-    return createTodoElement(todo);
+    return createTodoElement(todo, index);
   });
   ulContainer.innerHTML = '';
   ulContainer.append(...todosNode);
