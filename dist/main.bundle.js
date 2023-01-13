@@ -931,6 +931,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const ulContainer = document.querySelector('ul');
+const form = document.querySelector("form");
+const input = document.querySelector("form > input");
 const todos = [{
   text: "Aller faire les courses",
   done: false
@@ -938,6 +940,18 @@ const todos = [{
   text: "Sortir le chien",
   done: true
 }];
+form.addEventListener('submit', event => {
+  event.preventDefault(); // on arrete le rechargement de la page
+  const todoText = input.value;
+  input.value = ''; // on réinitialise la zone de saisie
+
+  const newTodo = {
+    text: todoText,
+    done: false
+  }; // on créé un tache
+  todos.push(newTodo); // on ajoute la tache à la liste des taches todos
+  displayTodos();
+});
 
 //fonction fléchée qui va creer et remplir une balise <li>
 const createTodoElement = todo => {
